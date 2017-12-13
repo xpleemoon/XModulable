@@ -1,0 +1,49 @@
+// 工程组件化配置文件
+ext {
+    applicationId = "com.xpleemoon.component.sample"
+
+    // android sdk version
+    // 使用如下：
+    // def versions = rootProject.ext.versions
+    // compileSdkVersion versions.compileSdkVersion
+    // buildToolsVersion versions.buildToolsVersion
+    versions = [
+            compileSdkVersion: 26,
+            minSdkVersion    : 15,
+            targetSdkVersion : 26,
+            versionCode      : 1,
+            versionName      : '1.0.0',
+    ]
+
+    // dependencies
+    // 使用如下：
+    // def dependencies = rootProject.ext.dependencies
+    // compile dependencies.support.design
+    dependencies = [
+            support : [
+                    appcompat : "com.android.support:appcompat-v7:26.1.0",
+                    constraint: "com.android.support.constraint:constraint-layout:1.0.2"
+            ],
+            arouter : [
+                    api                : "com.alibaba:arouter-api:1.2.4",
+                    annotationProcessor: "com.alibaba:arouter-compiler:1.1.4"
+            ],
+            fastjson: "com.alibaba:fastjson:1.1.67.android",
+    ]
+
+    // 通过更改isStandalone的值实现业务组件是否独立运行，以及app壳工程对组件的灵活依赖
+    components = [
+            main: [
+                    isStandalone : false,
+                    applicationId: "${applicationId}.main",
+            ],
+            im  : [
+                    isStandalone : false,
+                    applicationId: "${applicationId}.im",
+            ],
+            live: [
+                    isStandalone : false,
+                    applicationId: "${applicationId}.live"
+            ],
+    ]
+}

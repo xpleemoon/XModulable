@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.xpleemoon.component.main">
+
+    <application>
+        <activity
+            android:name=".MainActivity"
+            android:label="MainActivity" />
+    </application>
+</manifest>

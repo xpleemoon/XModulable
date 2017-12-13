@@ -1,0 +1,1 @@
+include ':app', ':common', ':component-compiler', ':component-annotations', ':maincomponent', ':imcomponent', ':livecomponent', ':basicres', ':basiclib', ':component-api'

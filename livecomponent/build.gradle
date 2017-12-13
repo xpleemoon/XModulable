@@ -1,0 +1,82 @@
+def currentComponent = rootProject.ext.components.live
+if (currentComponent.isStandalone) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+
+android {
+    def versions = rootProject.ext.versions
+    compileSdkVersion versions.compileSdkVersion
+
+
+
+    defaultConfig {
+        if (currentComponent.isStandalone) {
+            // 当前组件独立运行，需要设置applicationId
+            applicationId currentComponent.applicationId
+        }
+        minSdkVersion versions.minSdkVersion
+        targetSdkVersion versions.targetSdkVersion
+        versionCode versions.versionCode
+        versionName versions.versionName
+
+        def moduleName = project.getName()
+        // 业务组件资源前缀，避免冲突
+        resourcePrefix "${moduleName}_"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        // ARouter处理器所需参数
+                        moduleName   : moduleName,
+                        // Component处理器所需参数
+                        componentName: moduleName
+                ]
+            }
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/LICENSE.txt'
+    }
+
+    sourceSets {
+        main {
+            if (currentComponent.isStandalone) {
+                manifest.srcFile 'src/standalone/AndroidManifest.xml'
+                java.srcDirs = ['src/main/java/', 'src/standalone/java/']
+                res.srcDirs = ['src/main/res', 'src/standalone/res']
+            }
+        }
+    }
+}
+
+dependencies {
+    def dependencies = rootProject.ext.dependencies
+
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation dependencies.support.appcompat
+
+    annotationProcessor dependencies.arouter.annotationProcessor
+    annotationProcessor project(':component-compiler')
+
+    api project(':common')
+}

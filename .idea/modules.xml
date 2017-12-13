@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ComponentSample.iml" filepath="$PROJECT_DIR$/ComponentSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basiclib/basiclib.iml" filepath="$PROJECT_DIR$/basiclib/basiclib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicres/basicres.iml" filepath="$PROJECT_DIR$/basicres/basicres.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/component-annotations/component-annotations.iml" filepath="$PROJECT_DIR$/component-annotations/component-annotations.iml" />
+      <module fileurl="file://$PROJECT_DIR$/component-api/component-api.iml" filepath="$PROJECT_DIR$/component-api/component-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/component-compiler/component-compiler.iml" filepath="$PROJECT_DIR$/component-compiler/component-compiler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/imcomponent/imcomponent.iml" filepath="$PROJECT_DIR$/imcomponent/imcomponent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/livecomponent/livecomponent.iml" filepath="$PROJECT_DIR$/livecomponent/livecomponent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/maincomponent/maincomponent.iml" filepath="$PROJECT_DIR$/maincomponent/maincomponent.iml" />
+    </modules>
+  </component>
+</project>

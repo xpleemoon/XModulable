@@ -1,0 +1,15 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    // 通过注解@AutoService(Processor.class)的方式生成META-INF/services/javax.annotation.processing.Processor，避免手动的尴尬
+    // https://github.com/google/auto/tree/master/service
+    implementation 'com.google.auto.service:auto-service:1.0-rc3'
+    // square提供的一个库——用于java文件，比jdk原生的writer更方便
+    // https://github.com/square/javapoet
+    implementation 'com.squareup:javapoet:1.9.0'
+    implementation project(':component-annotations')
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
