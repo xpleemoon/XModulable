@@ -1,9 +1,9 @@
 package com.xpleemoon.component.api;
 
 import android.support.annotation.NonNull;
+import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -55,7 +55,7 @@ public class ComponentOptions {
         Map<String, IComponent> mComponentMap;
 
         public Builder() {
-            mComponentMap = new HashMap<>();
+            mComponentMap = new ArrayMap<>();
         }
 
         /**

@@ -20,9 +20,6 @@ public class Logger {
         msg = messager;
     }
 
-    /**
-     * Print info log.
-     */
     public void info(CharSequence info) {
         msg.printMessage(Diagnostic.Kind.NOTE, Constants.PREFIX_OF_LOGGER + info);
     }

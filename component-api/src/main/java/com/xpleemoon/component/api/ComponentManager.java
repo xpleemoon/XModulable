@@ -88,7 +88,7 @@ public class ComponentManager {
                     .append(".")
                     .append(Constants.SDK_NAME)
                     .append(Constants.SEPARATOR_OF_CLASS_NAME)
-                    .append(Constants.CLASS_NAME_LOADER)
+                    .append(Constants.CLASS_OF_LOADER)
                     .toString();
             for (String className : loaderSet) {
                 if (className.startsWith(prefixOfLoader)) {
