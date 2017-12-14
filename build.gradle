@@ -29,7 +29,7 @@ task clean(type: Delete) {
 ext {
     userOrg = 'xpleemoon'
     groupId = 'com.xpleemoon.component'
-    publishVersion = '0.1.0'
+    publishVersion = '0.1.1'
     website = 'https://github.com/xpleemoon/ComponentSample'
     licences = ['Apache-2.0']
 }

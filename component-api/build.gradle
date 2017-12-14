@@ -5,6 +5,7 @@ publish {
     userOrg = rootProject.userOrg
     groupId = rootProject.groupId
     artifactId = 'component-api'
+    desc = "Component for android"
     publishVersion = rootProject.publishVersion
     website = rootProject.website
     licences = rootProject.licences

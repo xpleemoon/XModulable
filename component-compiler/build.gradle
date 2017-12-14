@@ -5,6 +5,7 @@ publish {
     userOrg = rootProject.userOrg
     groupId = rootProject.groupId
     artifactId = 'component-compiler'
+    desc = 'A compiler for ComponentManager to load component'
     publishVersion = rootProject.publishVersion
     website = rootProject.website
     licences = rootProject.licences

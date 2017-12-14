@@ -1,4 +1,15 @@
 apply plugin: 'java-library'
+apply plugin: 'com.novoda.bintray-release'
+
+publish {
+    userOrg = rootProject.userOrg
+    groupId = rootProject.groupId
+    artifactId = 'component-annotations'
+    desc = 'The annotation used in component api'
+    publishVersion = rootProject.publishVersion
+    website = rootProject.website
+    licences = rootProject.licences
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

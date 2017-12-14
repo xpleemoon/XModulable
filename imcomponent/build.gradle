@@ -38,10 +38,51 @@ android {
 
     }
 
+    /**
+     * 签名配置
+     */
+    signingConfigs {
+        def signInfo = rootProject.ext.signInfo
+        def releaseSignInfo = signInfo.release
+        def debugSignInfo = signInfo.debug
+
+        release {
+            storeFile file(releaseSignInfo.storeFilePath)
+            storePassword releaseSignInfo.storePassword
+            keyAlias releaseSignInfo.keyAlias
+            keyPassword releaseSignInfo.keyPassword
+        }
+        debug {
+            storeFile file(debugSignInfo.storeFilePath)
+            storePassword debugSignInfo.storePassword
+            keyAlias debugSignInfo.keyAlias
+            keyPassword debugSignInfo.keyPassword
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 签名
+            signingConfig signingConfigs.release
+            // 组件若独立运行，则开启混淆；否则关闭，避免多次混淆
+            minifyEnabled currentComponent.isStandalone
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro',
+                    '../common/proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        staging {
+            signingConfig signingConfigs.debug
+            debuggable true
+            minifyEnabled currentComponent.isStandalone
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro',
+                    '../common/proguard-rules.pro'
+
+            // 按顺序查找依赖module的build type（命中就停止查找），然后进行对应build type的依赖
+            matchingFallbacks = ['debug', 'staging', 'release']
         }
     }
 

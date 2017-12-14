@@ -31,6 +31,21 @@ ext {
             fastjson: "com.alibaba:fastjson:1.1.67.android",
     ]
 
+    signInfo = [
+            release: [
+                    storeFilePath: '../keystore/component.keystore',
+                    storePassword: '123456',
+                    keyAlias     : 'component',
+                    keyPassword  : '123456'
+            ],
+            debug  : [
+                    storeFilePath: '../keystore/component_debug.keystore',
+                    storePassword: '123456',
+                    keyAlias     : 'component_debug',
+                    keyPassword  : '123456'
+            ]
+    ]
+
     // 通过更改isStandalone的值实现业务组件是否独立运行，以及app壳工程对组件的灵活依赖
     components = [
             main: [
