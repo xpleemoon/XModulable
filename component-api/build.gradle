@@ -1,20 +1,30 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+publish {
+    userOrg = rootProject.userOrg
+    groupId = rootProject.groupId
+    artifactId = 'component-api'
+    publishVersion = rootProject.publishVersion
+    website = rootProject.website
+    licences = rootProject.licences
+}
 
 android {
-    compileSdkVersion 26
+    def versions = rootProject.ext.versions
+    compileSdkVersion versions.compileSdkVersion
 
 
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion versions.minSdkVersion
+        targetSdkVersion versions.targetSdkVersion
 
     }
 
     buildTypes {
         release {
+            // 关闭混淆
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -23,9 +33,9 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    def dependencies = rootProject.ext.dependencies
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation dependencies.support.appcompat
 
     api project(':component-annotations')
 }
