@@ -1,9 +1,8 @@
 package com.xpleemoon.component.api;
 
-import android.support.annotation.NonNull;
-import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -14,7 +13,7 @@ import java.util.Map;
 public class ComponentOptions {
     private Map<String, IComponent> mComponentMap;
 
-    private ComponentOptions(@NonNull Map<String, IComponent> componentMap) {
+    private ComponentOptions(Map<String, IComponent> componentMap) {
         this.mComponentMap = componentMap;
     }
 
@@ -24,7 +23,7 @@ public class ComponentOptions {
      * @param name 组件服务类型
      * @return
      */
-    public IComponent getComponent(@NonNull String name) {
+    public IComponent getComponent(String name) {
         if (TextUtils.isEmpty(name)) {
             throw new IllegalArgumentException("组件名不能为空");
         }
@@ -39,7 +38,7 @@ public class ComponentOptions {
      * @param component
      * @param <Component>
      */
-    public <Component extends IComponent> void addComponent(@NonNull String name, @NonNull Component component) {
+    public <Component extends IComponent> void addComponent(String name, Component component) {
         if (TextUtils.isEmpty(name)) {
             throw new IllegalArgumentException("组件名不能为空");
         }
@@ -55,7 +54,7 @@ public class ComponentOptions {
         Map<String, IComponent> mComponentMap;
 
         public Builder() {
-            mComponentMap = new ArrayMap<>();
+            mComponentMap = new HashMap<>();
         }
 
         /**

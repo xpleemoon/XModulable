@@ -3,7 +3,6 @@ package com.xpleemoon.component.api;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
 
 import com.xpleemoon.component.api.template.IComponentLoader;
 import com.xpleemoon.component.api.utils.CacheUtils;
@@ -28,7 +27,6 @@ public class ComponentManager {
     private static boolean sDebuggable = false;
     private static Context sCtx;
     private static volatile ComponentManager sInstance;
-    @NonNull
     private final ComponentOptions mOptions;
 
     private ComponentManager() {
@@ -61,7 +59,7 @@ public class ComponentManager {
     /**
      * 初始化组件服务管理类，在使用该类时确保先进行初始化
      */
-    public static synchronized void init(@NonNull Context context) {
+    public static synchronized void init(Context context) {
         sCtx = context.getApplicationContext();
         Set<String> loaderSet = null;
         // 调试模式或者是新版本，会有新的类生成，因此需要重新加载，
@@ -122,7 +120,7 @@ public class ComponentManager {
      * @throws IllegalAccessException 组件{@code name}未注册或不存在
      * @see ComponentOptions#getComponent(String)
      */
-    public IComponent getComponent(@NonNull String name) throws IllegalAccessException {
+    public IComponent getComponent(String name) throws IllegalAccessException {
         check();
 
         IComponent component = mOptions.getComponent(name);
