@@ -8,6 +8,7 @@ import com.xpleemoon.common.app.BaseCommonActivity;
 import com.xpleemoon.common.router.component.ComponentName;
 import com.xpleemoon.common.router.component.live.LiveComponent;
 import com.xpleemoon.component.api.ComponentManager;
+import com.xpleemoon.component.api.exception.UnknownComponentException;
 import com.xpleemoon.component.live.R;
 
 public class LiveSplashActivity extends BaseCommonActivity {
@@ -22,7 +23,7 @@ public class LiveSplashActivity extends BaseCommonActivity {
         try {
             LiveComponent liveComponent = (LiveComponent) ComponentManager.getInstance().getComponent(ComponentName.LIVE);
             liveComponent.getLiveService().startLive();
-        } catch (IllegalAccessException e) {
+        } catch (UnknownComponentException e) {
             Toast.makeText(getApplication(), e.toString(), Toast.LENGTH_SHORT).show();
         }
     }

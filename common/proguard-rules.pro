@@ -30,5 +30,7 @@
 
 -dontwarn com.alibaba.android.arouter.facade.model.RouteMeta
 
+# Component
 -keep class * implements com.xpleemoon.component.api.template.IComponentLoader
 -keep class * implements com.xpleemoon.component.api.IComponent
+-keep class **$$ComponentInjector { *; }

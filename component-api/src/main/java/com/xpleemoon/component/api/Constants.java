@@ -1,6 +1,6 @@
 package com.xpleemoon.component.api;
 
-public class Constants {
+public final class Constants {
     public static final String SDK_NAME = "Component";
     public static final String TAG = SDK_NAME + "::";
 
@@ -10,4 +10,6 @@ public class Constants {
      */
     public static final String SEPARATOR_OF_CLASS_NAME = "$$";
     public static final String CLASS_OF_LOADER = "Loader";
+    public static final String CLASS_OF_INJECTOR = SDK_NAME + "Injector";
+    public static final String METHOD_OF_INJECT = "inject";
 }

@@ -4,6 +4,7 @@ package com.xpleemoon.component.api;
 import android.content.Context;
 import android.content.pm.PackageManager;
 
+import com.xpleemoon.component.api.exception.UnknownComponentException;
 import com.xpleemoon.component.api.template.IComponentLoader;
 import com.xpleemoon.component.api.utils.CacheUtils;
 import com.xpleemoon.component.api.utils.ClassUtils;
@@ -11,6 +12,7 @@ import com.xpleemoon.component.api.utils.PackageUtils;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Set;
 
 /**
@@ -110,22 +112,46 @@ public class ComponentManager {
         }
     }
 
-    private void check() {
+    private static void check() {
         if (sCtx == null) {
             throw new IllegalStateException("ComponentManager未初始化");
         }
     }
 
     /**
-     * @throws IllegalAccessException 组件{@code name}未注册或不存在
+     * 组件的依赖注入
+     *
+     * @param target
+     * @throws UnknownComponentException
+     */
+    public static void inject(Object target) throws UnknownComponentException {
+        check();
+
+        try {
+            Class injectorClz = Class.forName(target.getClass().getName() + Constants.SEPARATOR_OF_CLASS_NAME + Constants.CLASS_OF_INJECTOR);
+            Method bindsMethod = injectorClz.getMethod(Constants.METHOD_OF_INJECT, target.getClass());
+            bindsMethod.invoke(null, target);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @throws UnknownComponentException 组件{@code name}未注册或不存在
      * @see ComponentOptions#getComponent(String)
      */
-    public IComponent getComponent(String name) throws IllegalAccessException {
+    public IComponent getComponent(String name) throws UnknownComponentException {
         check();
 
         IComponent component = mOptions.getComponent(name);
         if (component == null) {
-            throw new IllegalAccessException(String.format("组件%1s未注册或不存在", name));
+            throw new UnknownComponentException(name);
         }
         return component;
     }

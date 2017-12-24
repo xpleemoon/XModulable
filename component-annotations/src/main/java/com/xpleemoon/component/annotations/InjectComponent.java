@@ -6,15 +6,17 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 组件声明
+ * 组件注入
  *
  * @author xpleemoon
  */
-@Target(ElementType.TYPE)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.CLASS)
-public @interface Component {
+public @interface InjectComponent {
     /**
      * 组件名
      */
     String name() default "";
+
+    String desc() default "若组件未注册或未知，则会引起依赖注入失败";
 }

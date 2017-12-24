@@ -37,5 +37,5 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
 //    api project(':component-annotations')
-    api 'com.xpleemoon.component:component-annotations:0.1.1'
+    api 'com.xpleemoon.component:component-annotations:0.1.3'
 }

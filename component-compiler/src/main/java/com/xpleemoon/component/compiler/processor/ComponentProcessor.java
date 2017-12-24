@@ -1,4 +1,4 @@
-package com.xpleemoon.component.compiler;
+package com.xpleemoon.component.compiler.processor;
 
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
@@ -7,6 +7,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.xpleemoon.component.annotations.Component;
+import com.xpleemoon.component.compiler.Constants;
 import com.xpleemoon.component.compiler.exception.ProcessException;
 import com.xpleemoon.component.compiler.utils.Logger;
 
@@ -182,7 +183,6 @@ public class ComponentProcessor extends AbstractProcessor {
                componentOptions.addComponent(, );
          }
          */
-        mLogger.info(String.format("创建方法：%s", Constants.METHOD_OF_LOAD_INTO));
         MethodSpec.Builder loadIntoMethod = MethodSpec.methodBuilder(Constants.METHOD_OF_LOAD_INTO)
                 .addJavadoc("向$N添加组件", Constants.PARAMETER_OF_COMPONENT_OPTIONS)
                 .addAnnotation(Override.class)
@@ -197,6 +197,7 @@ public class ComponentProcessor extends AbstractProcessor {
             TypeName componentTypeName = TypeName.get(entry.getValue().asType()); // 注解的宿主类型名
             loadIntoMethod.addStatement("$N.addComponent($S, new $T())", Constants.PARAMETER_OF_COMPONENT_OPTIONS, componentName, componentTypeName);
         }
+        mLogger.info(String.format("创建方法：%s", Constants.METHOD_OF_LOAD_INTO));
 
         /*
         2、创建类
@@ -209,7 +210,6 @@ public class ComponentProcessor extends AbstractProcessor {
                 .append(Constants.SEPARATOR_OF_CLASS_NAME)
                 .append(mModuleName)
                 .toString();
-        mLogger.info(String.format("创建类：%s", className));
         TypeSpec.Builder componentLoader = TypeSpec.classBuilder(className)
                 .addJavadoc(
                         new StringBuilder()
@@ -225,15 +225,16 @@ public class ComponentProcessor extends AbstractProcessor {
                 .addSuperinterface(ClassName.get(mIComponentLoader))
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addMethod(loadIntoMethod.build());
+        mLogger.info(String.format("创建类：%s", className));
 
         /*
         3、输出源文件
         Component$$Loader$$组件名.java
          */
-        mLogger.info(String.format("输出源文件：%s", className));
         try {
             JavaFile.builder(Constants.PACKAGE_OF_GENERATE, componentLoader.build())
                     .build().writeTo(mFiler);
+            mLogger.info(String.format("输出源文件：%s", Constants.PACKAGE_OF_GENERATE + "." + className + ".java"));
         } catch (IOException e) {
             throw new ProcessException(e.fillInStackTrace());
         }

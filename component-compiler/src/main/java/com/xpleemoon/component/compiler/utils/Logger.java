@@ -14,10 +14,10 @@ import javax.tools.Diagnostic;
  * @since 16/8/22 上午11:48
  */
 public class Logger {
-    private Messager msg;
+    private final Messager msg;
 
     public Logger(Messager messager) {
-        msg = messager;
+        this.msg = messager;
     }
 
     public void info(CharSequence info) {

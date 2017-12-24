@@ -8,6 +8,7 @@ import com.xpleemoon.common.app.BaseCommonActivity;
 import com.xpleemoon.common.router.component.ComponentName;
 import com.xpleemoon.common.router.component.im.IMComponent;
 import com.xpleemoon.component.api.ComponentManager;
+import com.xpleemoon.component.api.exception.UnknownComponentException;
 import com.xpleemoon.component.im.R;
 
 public class IMSplashActivity extends BaseCommonActivity {
@@ -22,7 +23,7 @@ public class IMSplashActivity extends BaseCommonActivity {
         try {
             IMComponent imComponent = (IMComponent) ComponentManager.getInstance().getComponent(ComponentName.IM);
             imComponent.getIMService().startIM();
-        } catch (IllegalAccessException e) {
+        } catch (UnknownComponentException e) {
             Toast.makeText(getApplication(), e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
