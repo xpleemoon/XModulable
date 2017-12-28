@@ -26,9 +26,9 @@
   }
 
   dependencies {
-      // gradle3.0以上建议使用implementation(或者api) 'com.xpleemoon.component:component-api:0.1.3'
-      compile 'com.xpleemoon.component:component-api:0.1.3'
-      annotationProcessor 'com.xpleemoon.component:component-compiler:0.1.3'
+      // gradle3.0以上建议使用implementation(或者api) 'com.xpleemoon.component:component-api:0.1.4'
+      compile 'com.xpleemoon.component:component-api:0.1.4'
+      annotationProcessor 'com.xpleemoon.component:component-compiler:0.1.4'
       ...
   }
   ```
