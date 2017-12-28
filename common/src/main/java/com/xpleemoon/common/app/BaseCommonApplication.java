@@ -24,7 +24,7 @@ public abstract class BaseCommonApplication extends BaseApplication {
         ARouter.init(this); // 尽可能早，推荐在Application中初始化
 
         if (isDebug) {
-            ComponentManager.openDebuggable(); // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
+            ComponentManager.openDebug(); // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
         }
         ComponentManager.init(this); // 必须在ARouter初始化后进行，因为组件对象有可能回包含ARouter对应的IOC
     }

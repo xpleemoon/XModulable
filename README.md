@@ -46,7 +46,7 @@
 
   ```
   if (isDebug) {
-      ComponentManager.openDebuggable();
+      ComponentManager.openDebug();
   }
   ComponentManager.init(this);
   ```
@@ -65,11 +65,7 @@
         @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            try {
-                ComponentManager.inject(this);
-            } catch (UnknownComponentException e) {
-                e.printStackTrace();
-            }
+            ComponentManager.inject(this);
         }
     }
     ```

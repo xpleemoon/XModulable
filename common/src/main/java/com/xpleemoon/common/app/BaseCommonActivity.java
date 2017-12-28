@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.xpleemoon.basiclib.BaseActivity;
 import com.xpleemoon.component.api.ComponentManager;
-import com.xpleemoon.component.api.exception.UnknownComponentException;
 
 /**
  * 公共业务基础activity
@@ -21,10 +20,6 @@ public class BaseCommonActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ARouter.getInstance().inject(this);
-        try {
-            ComponentManager.inject(this);
-        } catch (UnknownComponentException e) {
-            e.printStackTrace();
-        }
+        ComponentManager.inject(this);
     }
 }

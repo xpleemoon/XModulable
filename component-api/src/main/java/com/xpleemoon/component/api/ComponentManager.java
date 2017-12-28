@@ -3,6 +3,7 @@ package com.xpleemoon.component.api;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.util.LruCache;
 
 import com.xpleemoon.component.api.exception.UnknownComponentException;
 import com.xpleemoon.component.api.template.IComponentLoader;
@@ -13,6 +14,8 @@ import com.xpleemoon.component.api.utils.PackageUtils;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,6 +32,8 @@ public class ComponentManager {
     private static boolean sDebuggable = false;
     private static Context sCtx;
     private static volatile ComponentManager sInstance;
+    private static final LruCache<String, Class> sInjectorClzCache = new LruCache<>(20);
+    private static final List<String> sBlackNames = new ArrayList<>();
     private final ComponentOptions mOptions;
 
     private ComponentManager() {
@@ -50,11 +55,11 @@ public class ComponentManager {
         return sDebuggable;
     }
 
-    public static void openDebuggable() {
+    public static void openDebug() {
         sDebuggable = true;
     }
 
-    public static void closeDebuggable() {
+    public static void closeDebug() {
         sDebuggable = false;
     }
 
@@ -122,23 +127,25 @@ public class ComponentManager {
      * 组件的依赖注入
      *
      * @param target
-     * @throws UnknownComponentException
      */
-    public static void inject(Object target) throws UnknownComponentException {
+    public static void inject(Object target) {
         check();
 
+        String injectorClzName = target.getClass().getName() + Constants.SEPARATOR_OF_CLASS_NAME + Constants.CLASS_OF_INJECTOR;
+        if (sBlackNames.contains(injectorClzName)) {
+            return;
+        }
+
+        Class injectorClz = sInjectorClzCache.get(injectorClzName);
         try {
-            Class injectorClz = Class.forName(target.getClass().getName() + Constants.SEPARATOR_OF_CLASS_NAME + Constants.CLASS_OF_INJECTOR);
+            if (injectorClz == null) {
+                injectorClz = Class.forName(injectorClzName);
+            }
             Method bindsMethod = injectorClz.getMethod(Constants.METHOD_OF_INJECT, target.getClass());
             bindsMethod.invoke(null, target);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            sInjectorClzCache.put(injectorClzName, injectorClz);
+        } catch (Exception e) {
+            sBlackNames.add(injectorClzName);
         }
     }
 
