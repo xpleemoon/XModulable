@@ -21,9 +21,9 @@ android {
             annotationProcessorOptions {
                 arguments = [
                         // ARouter处理器所需参数
-                        moduleName   : moduleName,
-                        // Component处理器所需参数
-                        componentName: moduleName
+                        moduleName: moduleName,
+                        // XModulable处理器所需参数
+                        XModule   : moduleName
                 ]
             }
         }
@@ -59,9 +59,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'),
                     'proguard-rules.pro',
                     '../common/proguard-rules.pro',
-                    '../maincomponent/proguard-rules.pro',
-                    '../imcomponent/proguard-rules.pro',
-                    '../livecomponent/proguard-rules.pro'
+                    '../main/proguard-rules.pro',
+                    '../im/proguard-rules.pro',
+                    '../live/proguard-rules.pro'
         }
         debug {
             signingConfig signingConfigs.debug
@@ -73,9 +73,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'),
                     'proguard-rules.pro',
                     '../common/proguard-rules.pro',
-                    '../maincomponent/proguard-rules.pro',
-                    '../imcomponent/proguard-rules.pro',
-                    '../livecomponent/proguard-rules.pro'
+                    '../main/proguard-rules.pro',
+                    '../im/proguard-rules.pro',
+                    '../live/proguard-rules.pro'
 
             // 按顺序查找依赖module的build type（命中就停止查找），然后进行对应build type的依赖
             matchingFallbacks = ['debug', 'staging', 'release']
@@ -104,24 +104,24 @@ dependencies {
     implementation dependencies.support.constraint
 
     annotationProcessor dependencies.arouter.annotationProcessor
-    annotationProcessor project(':component-compiler')
+    annotationProcessor project(':XModulable-compiler')
 
-    def components = rootProject.ext.components
-    def isMainStandalone = components.main.isStandalone
-    def isIMStandalone = components.im.isStandalone
-    def isLiveStandalone = components.live.isStandalone
+    def modules = rootProject.ext.modules
+    def isMainStandalone = modules.main.isStandalone
+    def isIMStandalone = modules.im.isStandalone
+    def isLiveStandalone = modules.live.isStandalone
     // 判断业务组件是否独立运行，实现业务组件的灵活依赖
     if (isMainStandalone && isIMStandalone && isLiveStandalone) {
         api project(':common')
     } else {
         if (!isMainStandalone) {
-            implementation project(':maincomponent')
+            implementation project(':main')
         }
         if (!isIMStandalone) {
-            implementation project(':imcomponent')
+            implementation project(':im')
         }
         if (!isLiveStandalone) {
-            implementation project(':livecomponent')
+            implementation project(':live')
         }
     }
 }

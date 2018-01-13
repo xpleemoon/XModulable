@@ -18,8 +18,8 @@ android {
                 arguments = [
                         // ARouter处理器所需参数
                         moduleName   : moduleName,
-                        // Component处理器所需参数
-                        componentName: moduleName
+                        // XModulable处理器所需参数
+                        XModule: moduleName
                 ]
             }
         }
@@ -57,8 +57,8 @@ dependencies {
     api dependencies.arouter.api
     annotationProcessor dependencies.arouter.annotationProcessor
 
-    api project(':component-api')
-    annotationProcessor project(':component-compiler')
+    api project(':XModulable-api')
+    annotationProcessor project(':XModulable-compiler')
 
     api project(':basiclib')
     api project(':basicres')

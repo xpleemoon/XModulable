@@ -1,5 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-apply from: 'config/component.gradle'
+apply from: 'config/module.gradle'
 
 buildscript {
 
@@ -28,8 +28,8 @@ task clean(type: Delete) {
 
 ext {
     userOrg = 'xpleemoon'
-    groupId = 'com.xpleemoon.component'
-    publishVersion = '0.1.4'
-    website = 'https://github.com/xpleemoon/Component'
+    groupId = 'com.xpleemoon.xmodulable'
+    publishVersion = '1.0.0'
+    website = 'https://github.com/xpleemoon/XModulable'
     licences = ['Apache-2.0']
 }

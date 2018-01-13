@@ -1,0 +1,19 @@
+apply plugin: 'java-library'
+apply plugin: 'com.novoda.bintray-release'
+
+publish {
+    userOrg = rootProject.userOrg
+    groupId = rootProject.groupId
+    artifactId = 'XModulable-annotation'
+    desc = 'The annotation used in XModulable api'
+    publishVersion = rootProject.publishVersion
+    website = rootProject.website
+    licences = rootProject.licences
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

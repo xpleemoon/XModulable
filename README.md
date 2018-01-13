@@ -1,4 +1,4 @@
-# Component Sample
+# 组件化
 
 组件化的套路通常是：
 
@@ -6,8 +6,13 @@
   - app壳将组件注册到路由层
   - 上层通过路由层查找组件，通过路组件暴露的服务实现通信交互
 
-> - 路由采用[ARouter](https://github.com/alibaba/ARouter)实现
-> - component sdk：`@Component`注解作为组件声明、`ComponentManager`作为组件的注册和查找
+本例中的组件化：
+  - 路由采用[ARouter](https://github.com/alibaba/ARouter)实现
+  - XModulable SDK负责组件的注册和查找，这里的组件可视为组件服务的容器：
+    - `@XModule`——组件声明
+    - `@InjectXModule`——组件注入声明
+    - `XModulable`——作为组件的注册、查找和依赖注入
+  - 业务组件独立运行，只需要更改module.gradle对应的业务组件`isStandalone`为true即可
 
 ## 使用方法
 
@@ -19,16 +24,16 @@
       	...
       	javaCompileOptions {
       	    annotationProcessorOptions {
-      		      arguments = [ componentName : project.getName() ]
+      		      arguments = [ XModule : project.getName() ]
       	    }
       	}
       }
   }
 
   dependencies {
-      // gradle3.0以上建议使用implementation(或者api) 'com.xpleemoon.component:component-api:0.1.4'
-      compile 'com.xpleemoon.component:component-api:0.1.4'
-      annotationProcessor 'com.xpleemoon.component:component-compiler:0.1.4'
+      // gradle3.0以上建议使用implementation(或者api) 'com.xpleemoon.xmodulable:XModulable-api:+'
+      compile 'com.xpleemoon.xmodulable:XModulable-api:+'
+      annotationProcessor 'com.xpleemoon.xmodulable:XModulable-compiler:+'
       ...
   }
   ```
@@ -36,8 +41,8 @@
 2. 实现组件
 
   ```
-  @Component(name = "XX组件名")
-  public class XXComponent implements IComponent{
+  @XModule(name = "XX组件名")
+  public class XXModule implements IModule{
 
   }
   ```
@@ -46,9 +51,9 @@
 
   ```
   if (isDebug) {
-      ComponentManager.openDebug();
+      XModulable.openDebug();
   }
-  ComponentManager.init(this);
+  XModulable.init(this);
   ```
 
 4. 获取组件
@@ -59,13 +64,13 @@
 
     ```
     public class TestActivity extends BaseActivity {
-        @InjectComponent(name = "xxx")
-        XXComponent mXXComponent;
+        @InjectXModule(name = "xxx")
+        XXModule mXXModule;
 
         @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            ComponentManager.inject(this);
+            XModulable.inject(this);
         }
     }
     ```
@@ -73,13 +78,13 @@
   2. 手动获取：
 
     ```
-    ComponentManager.getInstance().getComponent("XX组件名")
+    XModulable.getInstance().getModule("XX组件名")
     ```
 
 5. 添加混淆规则
 
   ```
-  -keep class * implements com.xpleemoon.component.api.template.IComponentLoader
-  -keep class * implements com.xpleemoon.component.api.IComponent
-  -keep class **$$ComponentInjector { *; }
+  -keep class * implements com.xpleemoon.xmodulable.api.template.XModuleLoader
+  -keep class * implements com.xpleemoon.xmodulable.api.IModule
+  -keep class **$$XModulableInjector { *; }
   ```

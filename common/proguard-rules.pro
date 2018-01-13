@@ -30,7 +30,7 @@
 
 -dontwarn com.alibaba.android.arouter.facade.model.RouteMeta
 
-# Component
--keep class * implements com.xpleemoon.component.api.template.IComponentLoader
--keep class * implements com.xpleemoon.component.api.IComponent
--keep class **$$ComponentInjector { *; }
+# XModule
+-keep class * implements com.xpleemoon.xmodulable.api.template.XModuleLoader
+-keep class * implements com.xpleemoon.xmodulable.api.IModule
+-keep class **$$XModulableInjector { *; }

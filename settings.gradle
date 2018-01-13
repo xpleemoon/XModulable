@@ -1,1 +1,1 @@
-include ':app', ':common', ':component-compiler', ':component-annotations', ':maincomponent', ':imcomponent', ':livecomponent', ':basicres', ':basiclib', ':component-api'
+include ':app', ':common', ':main', ':im', ':live', ':basicres', ':basiclib', ':XModulable-compiler', ':XModulable-annotation', ':XModulable-api'
