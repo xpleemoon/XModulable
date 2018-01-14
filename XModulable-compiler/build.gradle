@@ -19,7 +19,8 @@ dependencies {
     // square提供的一个库——用于java文件，比jdk原生的writer更方便
     // https://github.com/square/javapoet
     implementation 'com.squareup:javapoet:1.9.0'
-    implementation project(':XModulable-annotation')
+//    implementation project(':XModulable-annotation')
+    implementation 'com.xpleemoon.xmodulable:XModulable-annotation:1.0.0'
 }
 
 sourceCompatibility = "1.7"
