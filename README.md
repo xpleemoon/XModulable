@@ -1,4 +1,4 @@
-# 组件化
+## XModulable
 
 组件化的套路通常是：
 
@@ -14,7 +14,15 @@
     - `XModulable`——作为组件的注册、查找和依赖注入
   - 业务组件独立运行，只需要更改module.gradle对应的业务组件`isStandalone`为true即可
 
-## 使用方法
+---
+
+### Latest Version
+
+SDK|XModulable-api|XModulable-compiler|XModulable-annotation
+:---|:---:|:---:|:---:
+最新版本|[ ![Download](https://api.bintray.com/packages/xpleemoon/maven/XModulable-api/images/download.svg) ](https://bintray.com/xpleemoon/maven/XModulable-api/_latestVersion)|[ ![Download](https://api.bintray.com/packages/xpleemoon/maven/XModulable-compiler/images/download.svg) ](https://bintray.com/xpleemoon/maven/XModulable-compiler/_latestVersion)|[ ![Download](https://api.bintray.com/packages/xpleemoon/maven/XModulable-annotation/images/download.svg) ](https://bintray.com/xpleemoon/maven/XModulable-annotation/_latestVersion)
+
+### 使用方法
 
 1. 添加依赖配置
 
@@ -31,9 +39,9 @@
   }
 
   dependencies {
-      // gradle3.0以上建议使用implementation(或者api) 'com.xpleemoon.xmodulable:XModulable-api:+'
-      compile 'com.xpleemoon.xmodulable:XModulable-api:+'
-      annotationProcessor 'com.xpleemoon.xmodulable:XModulable-compiler:+'
+      // gradle3.0以上建议使用implementation(或者api) 'com.xpleemoon.xmodulable:XModulable-api:x.x.x'
+      compile 'com.xpleemoon.xmodulable:XModulable-api:x.x.x'
+      annotationProcessor 'com.xpleemoon.xmodulable:XModulable-compiler:x.x.x'
       ...
   }
   ```
