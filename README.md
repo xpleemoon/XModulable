@@ -19,7 +19,7 @@
 ### Latest Version
 
 SDK|XModulable-api|XModulable-compiler|XModulable-annotation
----|---|---|---
+:---|:---:|:---:|:---:
 最新版本|[ ![Download](https://api.bintray.com/packages/xpleemoon/maven/XModulable-api/images/download.svg) ](https://bintray.com/xpleemoon/maven/XModulable-api/_latestVersion)|[ ![Download](https://api.bintray.com/packages/xpleemoon/maven/XModulable-compiler/images/download.svg) ](https://bintray.com/xpleemoon/maven/XModulable-compiler/_latestVersion)|[ ![Download](https://api.bintray.com/packages/xpleemoon/maven/XModulable-annotation/images/download.svg) ](https://bintray.com/xpleemoon/maven/XModulable-annotation/_latestVersion)
 
 ### 使用方法
