@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.xpleemoon.basiclib.BaseFragment;
+import com.xpleemoon.xmodulable.api.XModulable;
 
 /**
  * 公共业务基础fragment
@@ -19,5 +20,6 @@ public class BaseCommonFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ARouter.getInstance().inject(this);
+        XModulable.inject(this);
     }
 }

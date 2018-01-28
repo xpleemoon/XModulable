@@ -10,7 +10,7 @@ android {
     compileSdkVersion versions.compileSdkVersion
 
     defaultConfig {
-        applicationId rootProject.ext.applicationId
+        applicationId rootProject.applicationId
         minSdkVersion versions.minSdkVersion
         targetSdkVersion versions.targetSdkVersion
         versionCode versions.versionCode
@@ -106,7 +106,7 @@ dependencies {
     annotationProcessor dependencies.arouter.annotationProcessor
     annotationProcessor project(':XModulable-compiler')
 
-    def modules = rootProject.ext.modules
+    def modules = rootProject.modules
     def isMainStandalone = modules.main.isStandalone
     def isIMStandalone = modules.im.isStandalone
     def isLiveStandalone = modules.live.isStandalone

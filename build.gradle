@@ -1,5 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-apply from: 'config/module.gradle'
+apply from: 'config/config.gradle'
 
 buildscript {
 
@@ -27,6 +27,24 @@ task clean(type: Delete) {
 }
 
 ext {
+    applicationId = "com.xpleemoon.sample.modulable"
+
+    // 通过更改isStandalone的值实现业务模块是否独立运行，以及app壳工程对组件的灵活依赖
+    modules = [
+            main: [
+                    isStandalone : false,
+                    applicationId: "${applicationId}.main",
+            ],
+            im  : [
+                    isStandalone : false,
+                    applicationId: "${applicationId}.im",
+            ],
+            live: [
+                    isStandalone : true,
+                    applicationId: "${applicationId}.live"
+            ],
+    ]
+
     userOrg = 'xpleemoon'
     groupId = 'com.xpleemoon.xmodulable'
     publishVersion = '1.0.1'

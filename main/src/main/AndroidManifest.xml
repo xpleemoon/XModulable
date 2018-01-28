@@ -4,6 +4,9 @@
     <application>
         <activity
             android:name=".MainActivity"
-            android:label="MainActivity" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="主站"
+            android:screenOrientation="portrait"
+            android:theme="@style/MainTheme" />
     </application>
 </manifest>

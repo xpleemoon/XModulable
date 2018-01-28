@@ -1,4 +1,4 @@
-def currentModule = rootProject.ext.modules.live
+def currentModule = rootProject.modules.live
 if (currentModule.isStandalone) {
     apply plugin: 'com.android.application'
 } else {

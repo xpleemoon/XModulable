@@ -12,17 +12,17 @@ android {
         versionCode versions.versionCode
         versionName versions.versionName
 
-        def moduleName = project.getName()
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [
-                        // ARouter处理器所需参数
-                        moduleName   : moduleName,
-                        // XModulable处理器所需参数
-                        XModule: moduleName
-                ]
-            }
-        }
+//        def moduleName = project.getName()
+//        javaCompileOptions {
+//            annotationProcessorOptions {
+//                arguments = [
+//                        // ARouter处理器所需参数
+//                        moduleName   : moduleName,
+//                        // XModulable处理器所需参数
+//                        XModule: moduleName
+//                ]
+//            }
+//        }
     }
 
     buildTypes {
@@ -55,10 +55,10 @@ dependencies {
 
     // arouter
     api dependencies.arouter.api
-    annotationProcessor dependencies.arouter.annotationProcessor
+//    annotationProcessor dependencies.arouter.annotationProcessor
 
     api project(':XModulable-api')
-    annotationProcessor project(':XModulable-compiler')
+//    annotationProcessor project(':XModulable-compiler')
 
     api project(':basiclib')
     api project(':basicres')
