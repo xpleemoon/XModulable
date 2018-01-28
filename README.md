@@ -1,10 +1,20 @@
-## XModulable
+### Latest Version
+
+SDK|XModulable-api|XModulable-compiler|XModulable-annotation
+:---|:---:|:---:|:---:
+最新版本|[ ![Download](https://api.bintray.com/packages/xpleemoon/maven/XModulable-api/images/download.svg) ](https://bintray.com/xpleemoon/maven/XModulable-api/_latestVersion)|[ ![Download](https://api.bintray.com/packages/xpleemoon/maven/XModulable-compiler/images/download.svg) ](https://bintray.com/xpleemoon/maven/XModulable-compiler/_latestVersion)|[ ![Download](https://api.bintray.com/packages/xpleemoon/maven/XModulable-annotation/images/download.svg) ](https://bintray.com/xpleemoon/maven/XModulable-annotation/_latestVersion)
+
+---
+
+### XModulable
 
 组件化的套路通常是：
 
   - 组件之间互不依赖、相互隔离
   - app壳将组件注册到路由层
   - 上层通过路由层查找组件，通过路组件暴露的服务实现通信交互
+
+![XModulable架构图](https://github.com/xpleemoon/XModulable/blob/develop/arts/XModulable架构图.png?raw=true)
 
 本例中的组件化：
   - 路由采用[ARouter](https://github.com/alibaba/ARouter)实现
@@ -13,14 +23,6 @@
     - `@InjectXModule`——组件注入声明
     - `XModulable`——作为组件的注册、查找和依赖注入
   - 业务组件独立运行，只需要更改module.gradle对应的业务组件`isStandalone`为true即可
-
----
-
-### Latest Version
-
-SDK|XModulable-api|XModulable-compiler|XModulable-annotation
-:---|:---:|:---:|:---:
-最新版本|[ ![Download](https://api.bintray.com/packages/xpleemoon/maven/XModulable-api/images/download.svg) ](https://bintray.com/xpleemoon/maven/XModulable-api/_latestVersion)|[ ![Download](https://api.bintray.com/packages/xpleemoon/maven/XModulable-compiler/images/download.svg) ](https://bintray.com/xpleemoon/maven/XModulable-compiler/_latestVersion)|[ ![Download](https://api.bintray.com/packages/xpleemoon/maven/XModulable-annotation/images/download.svg) ](https://bintray.com/xpleemoon/maven/XModulable-annotation/_latestVersion)
 
 ### 使用方法
 
