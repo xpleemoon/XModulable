@@ -1,4 +1,4 @@
-def currentModule = rootProject.ext.modules.main
+def currentModule = rootProject.modules.main
 if (currentModule.isStandalone) {
     apply plugin: 'com.android.application'
 } else {
@@ -115,6 +115,7 @@ dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation dependencies.support.appcompat
+    implementation dependencies.support.design
 
     annotationProcessor dependencies.arouter.annotationProcessor
     annotationProcessor project(':XModulable-compiler')
