@@ -133,7 +133,7 @@ SDK|XModulable-api|XModulable-compiler|XModulable-annotation
 
 从上面的分析来看，第三方路由库是支持组件化/模块化的不二之选。但是这里又有一个问题——假设哪天抽风想要更换路由库或者可能某种特殊需求不同的业务模块使用了不容的路由库，那怎么办呢？没关系，我们这时候需要对路由库做一层封装，使业务模块内的路由都相互隔离，也就是一个业务模块内部的路由操作对其他业务模块来说是一个黑箱操作。我的封装思路是这样的：加一个`XModule`（可以把它想象成一个容器）的概念，在common层暴露服务接口的同时暴露`XModule`（它的具体实现也是有对应的业务模块决定的），每一业务模块都对应一个`XModule`，用于承载common层暴露的服务接口，业务模块之间的通信第一步必须先获取`XModule`，然后再通过这个容器去拿到服务。
 
-以IM业务模块为例，从源码的角度看下它们是实现这套思路的。在common层把IM业务模块想要暴露给其他业务模块的服务（`IMService `和`IMDaoService `）进行了暴露，同时在common层暴露了一个`IMModule`（IM业务模块的服务容器，承载了`IMService `和`IMDaoService `）。这样的话，上层业务就可以通过[XModulable SDK](https://github.com/xpleemoon/XModulable)获取到`IMModule`，然后通过`IMModule`承载的服务进行调用。
+以live业务模块为例，从源码的角度看下它们是实现这套思路的。在common层把live业务模块想要暴露给其他业务模块的服务`LiveService`进行了暴露，同时在common层暴露了一个`LiveModule`（live业务模块的服务容器，承载了`LiveService `）,l，live业务模块面向common层对应的接口进行实现（`LiveModuleImpl`和`LiveServiceImpl`）。这样的话，上层业务就可以通过[XModulable SDK](https://github.com/xpleemoon/XModulable)获取到`LiveModule`，然后通过`LiveModule`承载的服务进行调用。
 
 ```
   // common层live暴露的XModule（LiveModule）和服务接口（LiveService）
