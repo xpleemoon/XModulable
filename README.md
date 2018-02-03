@@ -126,14 +126,17 @@ SDK|XModulable-api|XModulable-compiler|XModulable-annotation
 
 模块化的通信（UI跳转和数据传递），需要抓住几个基本点：**隔离**、**解耦**、**代价小**（易维护）、**传递复杂数据**（`Fragment`、`View`、`File`……）。实现独立互不依赖模块的通信，很容易能够想到以下几种方式：
 
-  - **Android传统通信**（比如aidl、广播、自定义url……）和**第三方通信**（比如[EventBus](https://github.com/greenrobot/EventBus)、[RxBus](https://github.com/AndroidKnife/RxBus)……）
-    - 它们虽然都能够实现通信，但是却无法避免高度耦合、以及随着项目扩张导致难以维护的问题
+  - **Android传统通信**（比如aidl、广播、自定义url……）
+    - 无法避免高度耦合、以及随着项目扩张导致难以维护的问题
     - 还有另外一关键个问题就是只能进行一些非常简单的数据传递，像`Fragment`、`View`、`File`……这些数据（或者叫对象也行），完全无法通信传递，但是这些数据在实际的app中恰恰是组成一个app的关键节点。比如说app的主站中有一个`MainActivity`，它是一个`ViewPager`+`TabLayout`的结构，其中的每一个页面都是来自于不同模块的Fragment，这个时候我们的通信就完全无法满足了。
-  - 第三方路由库（比如[ARouter](https://github.com/alibaba/ARouter)、OkDeepLink、[DeepLinkDispatch](https://github.com/airbnb/DeepLinkDispatch)……）基本都能够实现**隔离**、**解耦**、**代价小**（易维护），至于数据传递的话默认只支持一些简单数据，但是我们可以通过路由库支持的路由到自定义服务的方式实现复杂数据的通信。以[ARouter](https://github.com/alibaba/ARouter)为例，可以在common层***暴露业务模块的服务接口***（`IProvider`，[ARouter](https://github.com/alibaba/ARouter)提供的服务接口，只要实现了该接口的自定义服务，[ARouter](https://github.com/alibaba/ARouter)都能进行路由操作），然后交由对应的业务模块去实现common层对应的服务接口，最后在业务模块中使用[ARouter](https://github.com/alibaba/ARouter)进行路由其他业务模块暴露的服务接口来实现。
+  - **第三方通信**（比如[EventBus](https://github.com/greenrobot/EventBus)、[RxBus](https://github.com/AndroidKnife/RxBus)……）
+    - 容易陷入茫茫的event通知和接收中，增加调试和维护的成本
+    - 能够传递一些复杂的数据，通过event事件来携带其它数据对象，但是代码耦合性相应的会增加
+  - 第三方路由库（比如[ARouter](https://github.com/alibaba/ARouter)、OkDeepLink、[DeepLinkDispatch](htt ps://github.com/airbnb/DeepLinkDispatch)……）基本都能够实现**隔离**、**解耦**、**代价小**（易维护）。至于数据传递的话默认只支持一些简单数据，但是我们可以结合**面向接口编程**，公共层暴露接口，业务层面向公共层的接口去实现对应的接口方法（UI跳转、数据读写……），最后当业务层使用的时候只需要通过路由到接口，就可以完成复杂数据的通信。以[ARouter](https://github.com/alibaba/ARouter)为例，可以在common层暴露业务模块的服务接口（`IProvider`，[ARouter](https://github.com/alibaba/ARouter)提供的服务接口，只要实现了该接口的自定义服务，[ARouter](https://github.com/alibaba/ARouter)都能进行路由操作），然后交由对应的业务模块去实现common层对应的服务接口，最后在业务模块中使用[ARouter](https://github.com/alibaba/ARouter)进行路由其他业务模块暴露的服务接口来实现。
 
-从上面的分析来看，第三方路由库是支持组件化/模块化的不二之选。但是这里又有一个问题——假设哪天抽风想要更换路由库或者可能某种特殊需求不同的业务模块使用了不容的路由库，那怎么办呢？没关系，我们这时候需要对路由库做一层封装，使业务模块内的路由都相互隔离，也就是一个业务模块内部的路由操作对其他业务模块来说是一个黑箱操作。我的封装思路是这样的：加一个`XModule`（可以把它想象成一个容器）的概念，在common层暴露服务接口的同时暴露`XModule`（它的具体实现也是有对应的业务模块决定的），每一业务模块都对应一个`XModule`，用于承载common层暴露的服务接口，业务模块之间的通信第一步必须先获取`XModule`，然后再通过这个容器去拿到服务。
+从上面的分析来看，路由+面向接口编程是实现组件化/模块化的不二之选，但是这里又有一个问题——假设哪天抽风想要更换路由库或者可能某种特殊需求不同的业务模块使用了不容的路由库，那怎么办呢？没关系，我们这时候需要对路由库做一层封装，使业务模块内的路由都相互隔离，也就是一个业务模块内部的路由操作对其他业务模块来说是一个黑箱操作。我的封装思路是这样的：加一个`XModule`（可以把它想象成一个容器）的概念，在common层暴露服务接口的同时暴露`XModule`（它的具体实现也是有对应的业务模块决定的），每一业务模块都对应一个`XModule`，用于承载common层暴露的服务接口，业务模块之间的通信第一步必须先获取`XModule`，然后再通过这个容器去拿到服务。
 
-以live业务模块为例，从源码的角度看下它们是实现这套思路的。在common层把live业务模块想要暴露给其他业务模块的服务`LiveService`进行了暴露，同时在common层暴露了一个`LiveModule`（live业务模块的服务容器，承载了`LiveService `）,l，live业务模块面向common层对应的接口进行实现（`LiveModuleImpl`和`LiveServiceImpl`）。这样的话，上层业务就可以通过[XModulable SDK](https://github.com/xpleemoon/XModulable)获取到`LiveModule`，然后通过`LiveModule`承载的服务进行调用。
+综上所述，最终的组件化/模块化采用的是**封装+路由+面向接口编程**。以live业务模块为例，从源码的角度看下它们是实现这套思路的。在common层把live业务模块想要暴露给其他业务模块的服务`LiveService`进行了暴露，同时在common层暴露了一个`LiveModule`（live业务模块的服务容器，承载了`LiveService `）,l，live业务模块面向common层对应的接口进行实现（`LiveModuleImpl`和`LiveServiceImpl`）。这样的话，上层业务就可以通过[XModulable SDK](https://github.com/xpleemoon/XModulable)获取到`LiveModule`，然后通过`LiveModule`承载的服务进行调用。
 
 ```
   // common层live暴露的XModule（LiveModule）和服务接口（LiveService）

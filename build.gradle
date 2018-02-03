@@ -27,21 +27,20 @@ task clean(type: Delete) {
 }
 
 ext {
-    applicationId = "com.xpleemoon.sample.modulable"
 
     // 通过更改isStandalone的值实现业务模块是否独立运行，以及app壳工程对组件的灵活依赖
     modules = [
             main: [
                     isStandalone : false,
-                    applicationId: "${applicationId}.main",
+                    applicationId: "${rootProject.ext.applicationId}.main",
             ],
             im  : [
                     isStandalone : false,
-                    applicationId: "${applicationId}.im",
+                    applicationId: "${rootProject.ext.applicationId}.im",
             ],
             live: [
                     isStandalone : true,
-                    applicationId: "${applicationId}.live"
+                    applicationId: "${rootProject.ext.applicationId}.live"
             ],
     ]
 
