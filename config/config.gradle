@@ -1,5 +1,6 @@
 // 工程组件化配置文件
 ext {
+    applicationId = "com.xpleemoon.sample.modulable"
 
     // android sdk version
     // 使用如下：
